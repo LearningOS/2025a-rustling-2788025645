@@ -14,7 +14,6 @@
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
@@ -39,6 +38,41 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        let team1 = Team{
+            goals_scored:team_1_score,
+            goals_conceded:team_2_score,
+        };
+        let team2 = Team{
+            goals_scored:team_2_score,
+            goals_conceded:team_1_score,
+        };
+      /*   let entry1 = scores.entry(team_1_name).or_insert(team1);
+        *entry1.get(team_1_name).unwrap().goals_scored += team1.goals_scored;
+        *entry1.get(team_1_name).unwrap().goals_conceded += team1.goals_conceded;
+
+        
+        let entry2 = scores.entry(team_2_name).or_insert(team2);
+        *entry.Team.goals_scored += team2.goals_scored;
+        *entry.Team.goals_conceded += team2.goals_conceded; */
+
+          // -------------------------- 处理队1 --------------------------
+        // entry: 若队1已存在，返回其可变引用；若不存在，插入默认Team（0进球0失球）
+        let team1_entry = scores.entry(team_1_name).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        // 累加队1的进球数（本次比赛进球）和失球数（队2本次比赛进球）
+        team1_entry.goals_scored += team_1_score;
+        team1_entry.goals_conceded += team_2_score;
+
+        // -------------------------- 处理队2 --------------------------
+        // 同理处理队2
+        let team2_entry = scores.entry(team_2_name).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team2_entry.goals_scored += team_2_score;
+        team2_entry.goals_conceded += team_1_score;
     }
     scores
 }
